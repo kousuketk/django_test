@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from crud.models import Member
 
 # Create your views here.
 def health(request):
@@ -7,7 +8,8 @@ def health(request):
 
 
 def index(request):
-    return HttpResponse("一覧")
+    members = Member.objects.all().order_by("id")
+    return render(request, "members/index.html", {"members": members})
 
 
 def edit(request, id=None):

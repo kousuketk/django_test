@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.generic import ListView
 
 from crud.models import Member
 from crud.forms import MemberForm
@@ -12,6 +13,13 @@ def health(request):
 def index(request):
     members = Member.objects.all().order_by("id")
     return render(request, "members/index.html", {"members": members})
+
+
+class MemberList(ListView):
+    model = Member
+    context_object_name = "members"
+    template_name = "members/index.html"
+    paginate_by = 1
 
 
 def edit(request, id=None):

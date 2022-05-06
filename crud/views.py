@@ -31,8 +31,10 @@ def edit(request, id=None):
     return render(request, "members/edit.html", dict(form=form, id=id))
 
 
-def delete(request, id=None):
-    return HttpResponse("削除")
+def delete(request, id):
+    member = get_object_or_404(Member, pk=id)
+    member.delete()
+    return redirect("index")
 
 
 def detail(request, id=None):

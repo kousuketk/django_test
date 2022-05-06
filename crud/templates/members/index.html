@@ -26,7 +26,7 @@
       <td>{{ member.age }}</td>
       <td>
         <a href="{% url 'edit' id=member.id %}" class="btn btn-primary btn-sm">編集</a>
-        <a href="{% url 'delete' id=member.id %}" class="btn btn-primary btn-sm" id="btn_del">削除</a>
+        <a href="{% url 'delete' id=member.id %}" class="btn btn-primary btn-sm btn_del">削除</a>
       </td>
     </tr>
     {% endfor %}
@@ -35,4 +35,13 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+  $(".btn_del").click(function() {
+    if(confirm("削除しますか？")) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+</script>
 {% endblock %}

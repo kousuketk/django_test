@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+
 from crud.models import Member
+from crud.forms import MemberForm
 
 # Create your views here.
 def health(request):
@@ -13,7 +15,20 @@ def index(request):
 
 
 def edit(request, id=None):
-    return HttpResponse("編集")
+    if id:
+        member = get_object_or_404(Member, pk=id)
+    else:
+        member = Member()
+
+    if request.method == "POST":
+        form = MemberForm(request.POST, instance=member)
+        if form.is_valid():
+            member = form.save(commit=False)
+            member.save()
+            return redirect("index")
+    else:
+        form = MemberForm(instance=member)
+    return render(request, "members/edit.html", dict(form=form, id=id))
 
 
 def delete(request, id=None):

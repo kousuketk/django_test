@@ -37,5 +37,6 @@ def delete(request, id):
     return redirect("index")
 
 
-def detail(request, id=None):
-    return HttpResponse("詳細")
+def detail(request, id=id):
+    member = get_object_or_404(Member, pk=id)
+    return render(request, "members/detail.html", {"member": member})
